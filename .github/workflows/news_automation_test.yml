@@ -1,10 +1,10 @@
-name: News Automation Test
+name: News Automation: Fetch RSS
 
 on:
   workflow_dispatch:
 
 jobs:
-  test:
+  fetch-rss:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,6 +16,8 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run test script
-        run: |
-          python test_run.py
+      - name: Install requests
+        run: pip install requests
+
+      - name: Fetch RSS and print first news
+        run: python fetch_rss_github.py
