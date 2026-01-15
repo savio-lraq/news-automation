@@ -2,8 +2,6 @@ name: Fetch RSS News
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 * * * *"   # كل ساعة (يمكن تغييره لاحقًا)
 
 jobs:
   fetch-rss:
@@ -21,13 +19,13 @@ jobs:
       - name: Install requests
         run: pip install requests
 
-      - name: Run script (create news_latest.json)
+      - name: Fetch RSS and create news_latest.json
         run: python fetch_rss_github.py
 
-      - name: Commit and push if changed
+      - name: Commit news_latest.json to repo
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add news_latest.json
-          git diff --cached --quiet || git commit -m "Update news_latest.json"
+          git commit -m "Update news_latest.json" || echo "No changes to commit"
           git push
