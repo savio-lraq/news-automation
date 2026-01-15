@@ -22,13 +22,13 @@ jobs:
       - name: Install requests
         run: pip install requests
 
-      - name: Fetch RSS and create news_latest.json
+      - name: Fetch RSS and save json
         run: python fetch_rss_github.py
 
       - name: Commit and push news_latest.json
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
           git add news_latest.json
           git commit -m "Update news_latest.json" || echo "No changes to commit"
           git push
