@@ -8,11 +8,14 @@ RSS_URL = "https://www.shafaq.com/rss/ar/%D9%85%D8%AC%D8%AA%D9%80%D9%85%D8%B9"
 def clean_html(text: str) -> str:
     if not text:
         return ""
-    # تنظيف بسيط جدًا بدون مكتبات إضافية
-    return (text.replace("<p", " ").replace("</p>", " ")
-                .replace("<br>", " ").replace("&nbsp;", " ")
-                .replace("&amp;", "&").replace("&quot;", '"')
-                .replace("&lt;", "<").replace("&gt;", ">"))
+    return (
+        text.replace("<p", " ").replace("</p>", " ")
+            .replace("<br>", " ").replace("<br/>", " ").replace("<br />", " ")
+            .replace("&nbsp;", " ").replace("&amp;", "&")
+            .replace("&quot;", '"').replace("&lt;", "<").replace("&gt;", ">")
+            .replace("\n", " ").replace("\r", " ")
+            .strip()
+    )
 
 def main():
     r = requests.get(RSS_URL, timeout=30)
@@ -34,12 +37,12 @@ def main():
         "fetched_at_utc": datetime.utcnow().isoformat() + "Z"
     }
 
-    # حفظ داخل المستودع
     with open("news_latest.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
     print("Saved: news_latest.json")
     print("Title:", title)
+    print("Link:", link)
 
 if __name__ == "__main__":
     main()
