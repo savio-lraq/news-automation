@@ -3,7 +3,7 @@ name: Fetch RSS News
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/1 * * * *"
+    - cron: "0 * * * *"
 
 permissions:
   contents: write
@@ -11,6 +11,9 @@ permissions:
 jobs:
   fetch-rss:
     runs-on: ubuntu-latest
+
+    env:
+      TZ: Asia/Baghdad
 
     steps:
       - name: Checkout repository
