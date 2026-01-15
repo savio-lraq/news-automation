@@ -1,4 +1,4 @@
-name: News Automation: Fetch RSS
+name: Fetch RSS News
 
 on:
   workflow_dispatch:
